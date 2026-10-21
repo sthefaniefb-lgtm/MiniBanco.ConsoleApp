@@ -41,6 +41,3 @@ public abstract class Conta
     }
 }
 
-public class SaldoInsuficienteException : Exception
-{
-}

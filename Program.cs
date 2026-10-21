@@ -25,3 +25,35 @@ Console.WriteLine("Depois do saque: " + conta.Saldo);
 
 conta.AplicarFechamentoMensal();
 Console.WriteLine("Depois do fechamento: " + conta.Saldo);
+ContaPoupanca poupanca = new ContaPoupanca(
+    "Martina",
+    2001,
+    1000m,
+    0.5,
+    15
+);
+
+Console.WriteLine("Saldo inicial da poupança: " + poupanca.Saldo);
+
+poupanca.AplicarFechamentoMensal();
+
+Console.WriteLine("Saldo após rendimento: " + poupanca.Saldo);
+
+ContaSalario contaSalario = new ContaSalario(
+    "Martina",
+    3001,
+    1000m,
+    "Microsoft",
+    2
+);
+
+Console.WriteLine("Saldo inicial da conta salário: " + contaSalario.Saldo);
+
+contaSalario.Sacar(100m);
+Console.WriteLine("Depois do 1º saque: " + contaSalario.Saldo);
+
+contaSalario.Sacar(100m);
+Console.WriteLine("Depois do 2º saque: " + contaSalario.Saldo);
+
+contaSalario.Sacar(100m);
+Console.WriteLine("Depois do 3º saque: " + contaSalario.Saldo);

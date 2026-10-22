@@ -57,3 +57,17 @@ Console.WriteLine("Depois do 2º saque: " + contaSalario.Saldo);
 
 contaSalario.Sacar(100m);
 Console.WriteLine("Depois do 3º saque: " + contaSalario.Saldo);
+
+MotorAnalise motor = new MotorAnalise();
+
+Console.WriteLine();
+Console.WriteLine("RELATÓRIO DA CONTA CORRENTE");
+motor.ExibirRelatorio(conta);
+
+Console.WriteLine();
+Console.WriteLine("RELATÓRIO DA POUPANÇA");
+motor.ExibirRelatorio(poupanca);
+
+Console.WriteLine();
+Console.WriteLine("RELATÓRIO DA CONTA SALÁRIO");
+motor.ExibirRelatorio(contaSalario);

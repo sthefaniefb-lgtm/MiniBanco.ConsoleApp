@@ -1,73 +1,178 @@
-﻿Transacao Salario = new Transacao("Salario","Deposito",10000m); 
-Console.WriteLine(Salario.Descricao);
-Console.WriteLine(Salario.Tipo);
-Console.WriteLine(Salario.Valor); 
+﻿List<Conta> contas = new List<Conta>();
 
-Transacao Cartao = new Transacao("Cartao","Tarifa",4000m);
-Console.WriteLine(Cartao.Descricao);
-Console.WriteLine(Cartao.Tipo);
-Console.WriteLine(Cartao.Valor);
+int opcao = -1;
 
-Transacao SaqueOutubro = new Transacao ("SaqueOutubro","Saque",3000m);
-Console.WriteLine(SaqueOutubro.Descricao);
-Console.WriteLine(SaqueOutubro.Tipo);
-Console.WriteLine(SaqueOutubro.Valor);
+while (opcao != 0)
+{
+    try
+    {
+        Console.WriteLine();
+        Console.WriteLine("===== MINIBANCO =====");
+        Console.WriteLine("1 - Abrir Nova Conta");
+        Console.WriteLine("2 - Registrar Movimentação");
+        Console.WriteLine("3 - Aplicar Fechamento Mensal");
+        Console.WriteLine("4 - Gerar Relatório");
+        Console.WriteLine("0 - Sair");
 
-ContaCorrente conta = new ContaCorrente("Martina", 123, 10000m, 5000m);
+        Console.Write("Escolha uma opção: ");
 
-Console.WriteLine("Saldo inicial: " + conta.Saldo);
+        opcao = int.Parse(Console.ReadLine());
 
-conta.Depositar(2000m, "Deposito teste");
-Console.WriteLine("Depois do depósito: " + conta.Saldo);
+        if (opcao == 1)
+        {
+            Console.WriteLine();
+            Console.WriteLine("Qual tipo de conta deseja abrir?");
+            Console.WriteLine("1 - Conta Corrente");
+            Console.WriteLine("2 - Conta Poupança");
+            Console.WriteLine("3 - Conta Salário");
 
-conta.Sacar(3300m);
-Console.WriteLine("Depois do saque: " + conta.Saldo);
+            int tipoConta = int.Parse(Console.ReadLine());
 
-conta.AplicarFechamentoMensal();
-Console.WriteLine("Depois do fechamento: " + conta.Saldo);
-ContaPoupanca poupanca = new ContaPoupanca(
-    "Martina",
-    2001,
-    1000m,
-    0.5,
-    15
-);
+            Console.Write("Titular: ");
+            string titular = Console.ReadLine();
 
-Console.WriteLine("Saldo inicial da poupança: " + poupanca.Saldo);
+            Console.Write("Número da conta: ");
+            int numero = int.Parse(Console.ReadLine());
 
-poupanca.AplicarFechamentoMensal();
+            Console.Write("Saldo inicial: ");
+            decimal saldo = decimal.Parse(Console.ReadLine());
 
-Console.WriteLine("Saldo após rendimento: " + poupanca.Saldo);
+            if (tipoConta == 1)
+            {
+                Console.Write("Limite do cheque especial: ");
+                decimal limite = decimal.Parse(Console.ReadLine());
 
-ContaSalario contaSalario = new ContaSalario(
-    "Martina",
-    3001,
-    1000m,
-    "Microsoft",
-    2
-);
+                ContaCorrente novaConta = new ContaCorrente(
+                    titular,
+                    numero,
+                    saldo,
+                    limite
+                );
 
-Console.WriteLine("Saldo inicial da conta salário: " + contaSalario.Saldo);
+                contas.Add(novaConta);
 
-contaSalario.Sacar(100m);
-Console.WriteLine("Depois do 1º saque: " + contaSalario.Saldo);
+                Console.WriteLine("Conta Corrente criada com sucesso!");
+            }
+            else if (tipoConta == 2)
+            {
+                Console.Write("Taxa de rendimento mensal: ");
+                double taxa = double.Parse(Console.ReadLine());
 
-contaSalario.Sacar(100m);
-Console.WriteLine("Depois do 2º saque: " + contaSalario.Saldo);
+                Console.Write("Dia do aniversário: ");
+                int diaAniversario = int.Parse(Console.ReadLine());
 
-contaSalario.Sacar(100m);
-Console.WriteLine("Depois do 3º saque: " + contaSalario.Saldo);
+                ContaPoupanca novaConta = new ContaPoupanca(
+                    titular,
+                    numero,
+                    saldo,
+                    taxa,
+                    diaAniversario
+                );
 
-MotorAnalise motor = new MotorAnalise();
+                contas.Add(novaConta);
 
-Console.WriteLine();
-Console.WriteLine("RELATÓRIO DA CONTA CORRENTE");
-motor.ExibirRelatorio(conta);
+                Console.WriteLine("Conta Poupança criada com sucesso!");
+            }
+            else if (tipoConta == 3)
+            {
+                Console.Write("Empregador: ");
+                string empregador = Console.ReadLine();
 
-Console.WriteLine();
-Console.WriteLine("RELATÓRIO DA POUPANÇA");
-motor.ExibirRelatorio(poupanca);
+                Console.Write("Limite de saques mensais: ");
+                int limiteSaques = int.Parse(Console.ReadLine());
 
-Console.WriteLine();
-Console.WriteLine("RELATÓRIO DA CONTA SALÁRIO");
-motor.ExibirRelatorio(contaSalario);
+                ContaSalario novaConta = new ContaSalario(
+                    titular,
+                    numero,
+                    saldo,
+                    empregador,
+                    limiteSaques
+                );
+
+                contas.Add(novaConta);
+
+                Console.WriteLine("Conta Salário criada com sucesso!");
+            }
+        }
+        else if (opcao == 2)
+        {
+            Console.Write("Número da conta: ");
+            int numeroConta = int.Parse(Console.ReadLine());
+
+            Conta contaEncontrada = null;
+
+            foreach (Conta conta in contas)
+            {
+                if (conta.Numero == numeroConta)
+                {
+                    contaEncontrada = conta;
+                    break;
+                }
+            }
+
+            if (contaEncontrada == null)
+            {
+                Console.WriteLine("Conta não encontrada.");
+            }
+            else
+            {
+                Console.WriteLine("1 - Depósito");
+                Console.WriteLine("2 - Saque");
+
+                int tipoMovimentacao = int.Parse(Console.ReadLine());
+
+                if (tipoMovimentacao == 1)
+                {
+                    Console.Write("Valor do depósito: ");
+                    decimal valor = decimal.Parse(Console.ReadLine());
+
+                    Console.Write("Descrição: ");
+                    string descricao = Console.ReadLine();
+
+                    contaEncontrada.Depositar(valor, descricao);
+
+                    Console.WriteLine("Depósito realizado com sucesso!");
+                }
+                else if (tipoMovimentacao == 2)
+                {
+                    Console.Write("Valor do saque: ");
+                    decimal valor = decimal.Parse(Console.ReadLine());
+
+                    contaEncontrada.Sacar(valor);
+
+                    Console.WriteLine("Saque realizado com sucesso!");
+                }
+            }
+        }
+        else if (opcao == 3)
+        {
+            foreach (Conta conta in contas)
+            {
+                conta.AplicarFechamentoMensal();
+            }
+
+            Console.WriteLine("Fechamento mensal aplicado com sucesso!");
+        }
+        else if (opcao == 4)
+        {
+            MotorAnalise motor = new MotorAnalise();
+
+            foreach (Conta conta in contas)
+            {
+                motor.ExibirRelatorio(conta);
+            }
+        }
+    }
+    catch (SaldoInsuficienteException)
+    {
+        Console.WriteLine("Saldo insuficiente para realizar o saque.");
+    }
+    catch (ArgumentException erro)
+    {
+        Console.WriteLine("Erro: " + erro.Message);
+    }
+    catch (FormatException)
+    {
+        Console.WriteLine("Valor informado em formato inválido.");
+    }
+}

@@ -7,12 +7,15 @@ while (opcao != 0)
     try
     {
         Console.WriteLine();
-        Console.WriteLine("===== MINIBANCO =====");
-        Console.WriteLine("1 - Abrir Nova Conta");
-        Console.WriteLine("2 - Registrar Movimentação");
-        Console.WriteLine("3 - Aplicar Fechamento Mensal");
-        Console.WriteLine("4 - Gerar Relatório");
-        Console.WriteLine("0 - Sair");
+Console.WriteLine("======================================");
+Console.WriteLine("          MINIBANCO DIGITAL");
+Console.WriteLine("======================================");
+Console.WriteLine("1 - Abrir Nova Conta");
+Console.WriteLine("2 - Registrar Movimentação");
+Console.WriteLine("3 - Aplicar Fechamento Mensal");
+Console.WriteLine("4 - Gerar Relatório");
+Console.WriteLine("0 - Sair");
+Console.WriteLine("======================================");
 
         Console.Write("Escolha uma opção: ");
 

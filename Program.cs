@@ -7,11 +7,13 @@ while (opcao != 0)
     try
     {
         Console.WriteLine();
-        Console.WriteLine("===== MINIBANCO =====");
+        Console.WriteLine("===== MINIBANCO DIGITAL =====");
         Console.WriteLine("1 - Abrir Nova Conta");
         Console.WriteLine("2 - Registrar Movimentação");
-        Console.WriteLine("3 - Aplicar Fechamento Mensal");
-        Console.WriteLine("4 - Gerar Relatório");
+        Console.WriteLine("3 - Fazer Pix");
+        Console.WriteLine("4 - Pagar Boleto");
+        Console.WriteLine("5 - Aplicar Fechamento Mensal");
+        Console.WriteLine("6 - Gerar Relatório");
         Console.WriteLine("0 - Sair");
 
         Console.Write("Escolha uma opção: ");
@@ -146,6 +148,100 @@ while (opcao != 0)
         }
         else if (opcao == 3)
         {
+            Console.WriteLine();
+            Console.WriteLine("===== PIX =====");
+
+            Console.Write("Número da conta de origem: ");
+            int numeroOrigem = int.Parse(Console.ReadLine());
+
+            Console.Write("Número da conta de destino: ");
+            int numeroDestino = int.Parse(Console.ReadLine());
+
+            Conta contaOrigem = null;
+            Conta contaDestino = null;
+
+            foreach (Conta conta in contas)
+            {
+                if (conta.Numero == numeroOrigem)
+                {
+                    contaOrigem = conta;
+                }
+
+                if (conta.Numero == numeroDestino)
+                {
+                    contaDestino = conta;
+                }
+            }
+
+            if (contaOrigem == null || contaDestino == null)
+            {
+                Console.WriteLine("Conta de origem ou destino não encontrada.");
+            }
+            else if (numeroOrigem == numeroDestino)
+            {
+                Console.WriteLine("A conta de origem e destino não podem ser iguais.");
+            }
+            else
+            {
+                Console.Write("Valor do Pix: ");
+                decimal valorPix = decimal.Parse(Console.ReadLine());
+
+                contaOrigem.Sacar(valorPix);
+
+                contaDestino.Depositar(
+                    valorPix,
+                    "Pix recebido de " + contaOrigem.Titular
+                );
+
+                Console.WriteLine("Pix realizado com sucesso!");
+                Console.WriteLine(
+                    "Destino: " +
+                    contaDestino.Titular +
+                    " | Valor: R$ " +
+                    valorPix
+                );
+            }
+        }
+        else if (opcao == 4)
+        {
+            Console.WriteLine();
+            Console.WriteLine("===== PAGAMENTO DE BOLETO =====");
+
+            Console.Write("Número da conta: ");
+            int numeroConta = int.Parse(Console.ReadLine());
+
+            Conta contaBoleto = null;
+
+            foreach (Conta conta in contas)
+            {
+                if (conta.Numero == numeroConta)
+                {
+                    contaBoleto = conta;
+                    break;
+                }
+            }
+
+            if (contaBoleto == null)
+            {
+                Console.WriteLine("Conta não encontrada.");
+            }
+            else
+            {
+                Console.Write("Código do boleto: ");
+                string codigoBoleto = Console.ReadLine();
+
+                Console.Write("Valor do boleto: ");
+                decimal valorBoleto = decimal.Parse(Console.ReadLine());
+
+                contaBoleto.Sacar(valorBoleto);
+
+                Console.WriteLine("Boleto pago com sucesso!");
+                Console.WriteLine("Código: " + codigoBoleto);
+                Console.WriteLine("Valor pago: R$ " + valorBoleto);
+            }
+        }
+        else if (opcao == 5)
+        {
             foreach (Conta conta in contas)
             {
                 conta.AplicarFechamentoMensal();
@@ -153,7 +249,7 @@ while (opcao != 0)
 
             Console.WriteLine("Fechamento mensal aplicado com sucesso!");
         }
-        else if (opcao == 4)
+        else if (opcao == 6)
         {
             if (contas.Count == 0)
             {
@@ -172,7 +268,7 @@ while (opcao != 0)
     }
     catch (SaldoInsuficienteException)
     {
-        Console.WriteLine("Saldo insuficiente para realizar o saque.");
+        Console.WriteLine("Saldo insuficiente para realizar a operação.");
     }
     catch (ArgumentException erro)
     {

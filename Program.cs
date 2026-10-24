@@ -155,11 +155,18 @@ while (opcao != 0)
         }
         else if (opcao == 4)
         {
-            MotorAnalise motor = new MotorAnalise();
-
-            foreach (Conta conta in contas)
+            if (contas.Count == 0)
             {
-                motor.ExibirRelatorio(conta);
+                Console.WriteLine("Nenhuma conta aberta até o momento.");
+            }
+            else
+            {
+                MotorAnalise motor = new MotorAnalise();
+
+                foreach (Conta conta in contas)
+                {
+                    motor.ExibirRelatorio(conta);
+                }
             }
         }
     }

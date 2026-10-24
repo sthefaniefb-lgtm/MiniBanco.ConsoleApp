@@ -80,5 +80,18 @@ MiniBanco.ConsoleApp/
 ├── Exceptions/
 │   └── SaldoInsuficienteException.cs
 ├── Services/
+
+## Versão MiniBancoDigital
+
+Após a conclusão da versão principal do projeto, foi criada uma branch separada para experimentar funcionalidades mais próximas de um banco digital.
+
+Nesta versão foram adicionadas:
+
+- Transferência via Pix entre contas cadastradas no sistema.
+- Pagamento de boleto utilizando o saldo da conta.
+
+A proposta dessa branch foi testar uma evolução simples do projeto original sem alterar a versão principal já finalizada.
+
+Como possibilidade de melhoria futura, a versão digital poderia incluir recursos como chave Pix, QR Code e uma interface gráfica.
 │   └── MotorAnalise.cs
 └── MiniBanco.ConsoleApp.csproj
